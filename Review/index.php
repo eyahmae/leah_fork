@@ -1,5 +1,5 @@
 <?php 
-require_once '../database.php'; 
+require_once '../Database/database.php'; 
 require_once '../models/Review.php';
 session_start();
 require_once '../models/User.php';
@@ -361,7 +361,8 @@ if (!$reviews) {
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-2">
                                     <a href="show.php?id=<?= $review->id ?>" class="action-button view-button">View</a>
-                                    <a href="edit.php?id=<?= $review->id ?>" class="action-button edit-button">Edit</a>
+                                    <a href="edit.php?id=<?= $review->id ?>" class="action-button view-button">Edit</a>
+
                                     <?php if(isset($_SESSION['role']) && ($_SESSION['role'] == 'Super Admin' || $_SESSION['role'] == 'Admin')): ?>
                                         <a href="destroy.php?id=<?= $review->id ?>" class="action-button deactivate-button">Delete</a>
                                     <?php endif; ?>

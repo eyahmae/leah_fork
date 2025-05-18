@@ -2,7 +2,17 @@
     <div class="flex">
 
         <aside id="navbar" class=" text-blue-800 w-64" style="font-size: 20px; background-color: rgba(75, 216, 226, 0.75);">
+        <style>
+    aside nav a {
+        text-decoration: none;
+        color: white; /* Optional: ensures consistent color */
+    }
 
+    aside nav a:hover {
+        text-decoration: none;
+        color: black; /* Optional: hover color */
+    }
+</style>
             <nav class="space-y-2 mt-16 mb-10 p-4" style="color:white; ">
             <div class="logo text-xxl font-semibold text-white-800 flex items-center mb-5 ml-2 mt-4" style="font-size:40px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="white" class="bi bi-house-fill" viewBox="0 0 16 16">

@@ -11,7 +11,7 @@
 User::setConnection($conn);
 // If deletion is confirmed via POST
 if(isset($_POST['confirm_delete'])) {
-
+ 
     $id = $_GET['id'];
 
     $user = User::find($id);

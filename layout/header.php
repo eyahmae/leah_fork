@@ -114,12 +114,6 @@
             margin-left: 200px;
         }
 
-        
-        
-
-      
-
-
         header {
             background-color: #fff;
             padding: 1rem;

@@ -1,5 +1,13 @@
 <?php
 include 'header.php';
+
+$database = new database();
+$conn = $database->getConnection();
+
+Reservation::setConnection($conn);
+RoomType::setConnection($conn);
+Room::setConnection($conn);
+$reservations = Reservation::where('user_id', '=', $_SESSION['user_id']);
 ?>
 
 <head>
@@ -148,10 +156,10 @@ include 'header.php';
         <img src="../images/single_bedroom.jpeg" alt="Single Bedroom" />
         <div class="card-body text-center">
             <h5 class="fw-bold mt-2">Single Bedroom</h5>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal"
-               onclick="openRoomModal('Single Bedroom', 'A cozy room for one with all basic amenities.', '/images/single_bedroom.jpeg')">Details</a><br>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal" style="text-decoration: none;"
+               onclick="openRoomModal('Single Bedroom', 'A cozy room for one with all basic amenities.', '../images/single_bedroom.jpeg')">Details</a><br>
             <button class="btn btn-info text-white rounded-pill mt-2"
-                    data-bs-toggle="modal" data-bs-target="#createModal">Add room +</button>
+                    data-bs-toggle="modal" data-bs-target="#bookRoomModal">Add room +</button>
         </div>
     </div>
 
@@ -159,10 +167,10 @@ include 'header.php';
         <img src="../images/two_bedroom.png" alt="Two Bedroom" />
         <div class="card-body text-center">
             <h5 class="fw-bold mt-2">Two Bedroom</h5>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal"
-               onclick="openRoomModal('Two Bedroom', 'Spacious room with two beds and a mini-living space.', '/images/two_bedroom.jpeg')">Details</a><br>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal" style="text-decoration: none;"
+               onclick="openRoomModal('Two Bedroom', 'Spacious room with two beds and a mini-living space.', '../images/two_bedroom.png')">Details</a><br>
             <button class="btn btn-info text-white rounded-pill mt-2"
-                    data-bs-toggle="modal" data-bs-target="#createModal">Add room +</button>
+                    data-bs-toggle="modal" data-bs-target="#bookRoomModal">Add room +</button>
         </div>
     </div>
 
@@ -170,10 +178,10 @@ include 'header.php';
         <img src="../images/family_bedroom.png" alt="Family Bedroom" />
         <div class="card-body text-center">
             <h5 class="fw-bold mt-2">Family Bedroom</h5>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal"
-               onclick="openRoomModal('Family Bedroom', 'Ideal for families with children. Comes with extra bedding and space.', '/images/family_bedroom.jpeg')">Details</a><br>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal" style="text-decoration: none;"
+               onclick="openRoomModal('Family Bedroom', 'Ideal for families with children. Comes with extra bedding and space.', '../images/family_bedroom.png')">Details</a><br>
             <button class="btn btn-info text-white rounded-pill mt-2"
-                    data-bs-toggle="modal" data-bs-target="#createModal">Add room +</button>
+                    data-bs-toggle="modal" data-bs-target="#bookRoomModal">Add room +</button>
         </div>
     </div>
 
@@ -181,16 +189,17 @@ include 'header.php';
         <img src="../images/suite.png" alt="Deluxe Bedroom" />
         <div class="card-body text-center">
             <h5 class="fw-bold mt-2">Deluxe Bedroom</h5>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal"
-               onclick="openRoomModal('Deluxe Bedroom', 'Premium luxury with elegant design and full amenities.', '/images/suite.jpeg')">Details</a><br>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#roomModal" style="text-decoration: none;"
+               onclick="openRoomModal('Deluxe Bedroom', 'Premium luxury with elegant design and full amenities.', '../images/suite.png')">Details</a><br>
             <button class="btn btn-info text-white rounded-pill mt-2"
-                    data-bs-toggle="modal" data-bs-target="#createModal">Add room +</button>
+                    data-bs-toggle="modal" data-bs-target="#bookRoomModal">Add room +</button>
         </div>
     </div>
 </div>
 
+<?php if ($reservations): ?>
 <div class="reservation-table-container">
-  <h1>SUMMARY</h1>
+    <h1>SUMMARY</h1>
     <table class="reservation-table">
         <thead>
             <tr>
@@ -202,33 +211,146 @@ include 'header.php';
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="action-icons">
-                  <!--more-->
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
-                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-                  </svg>
-                  
-                  <!--edit-->
-                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                  </svg>
+            <?php 
+                foreach ($reservations as $reservation): 
+                $rooms = Room::find($reservation->room_id);
+                $room_types = RoomType::find($rooms->type_id);
 
-                  <!--cancel-->
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                  </svg>
-                  </td>
+                // Calculate total due
+                $checkInDate = new DateTime($reservation->check_in);
+                $checkOutDate = new DateTime($reservation->check_out);
+                $interval = $checkInDate->diff($checkOutDate);
+                $nights = $interval->days;
+                $totalDue = $rooms ? $rooms->price * $nights : 0;
+            ?>
+            <tr>
+                <td><?php echo $reservation->room_id; ?></td>
+                <td><?php echo $room_types->name; ?></td>
+                <td><?php echo $reservation->check_in; ?></td>
+                <td><?php echo $reservation->status; ?></td>
+                <td class="action-icons">
+                    <button type="button" class="btn btn-sm btn-primary view-reservation-btn" data-bs-toggle="modal" data-bs-target="#viewReservationModal" data-reservation-id="<?php echo $reservation->id; ?>" data-total-due="<?php echo $totalDue; ?>" title="View Reservation" aria-label="View Reservation" style="color: black; font-size: 1rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-warning edit-reservation-btn" data-bs-toggle="modal" data-bs-target="#editReservationModal" data-reservation-id="<?php echo $reservation->id; ?>" title="Edit Reservation" aria-label="Edit Reservation" style="color: black; font-size: 1rem; margin-left: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                    </button>
+<form action="../Reservation/cancel.php" method="POST" style="display:inline; margin-left: 8px;" onsubmit="return confirm('Are you sure you want to cancel this reservation?');" aria-label="Cancel Reservation">
+    <input type="hidden" name="reservation_id" value="<?php echo $reservation->id; ?>" />
+    <button type="submit" class="btn btn-sm btn-danger" style="color: black; font-size: 1rem; background: none; border: none; padding: 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-x-circle" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+        </svg>
+    </button>
+</form>
             </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+<?php else: ?>
+
+<?php endif; ?>
+
+<?php
+// Render the viewReservation modal
+echo Modals::layout('viewReservation');
+// Render the editReservation modal
+echo Modals::layout('editReservation');
+?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var viewButtons = document.querySelectorAll('.view-reservation-btn');
+    var modalElement = document.getElementById('viewReservationModal');
+    var modalBody = modalElement.querySelector('.modal-body');
+
+    viewButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var reservationId = this.getAttribute('data-reservation-id');
+
+            // Clear previous content
+            modalBody.innerHTML = '<h2 class="text-center mb-3" style="font-family: Cal Sans, sans-serif; font-weight: 700; font-size: 1.5rem;">Loading...</h2>';
+
+            // Fetch reservation details via AJAX
+            fetch('get_reservation_details.php?id=' + reservationId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        modalBody.innerHTML = '<p>Error loading reservation details.</p>';
+                    } else {
+                        // Use the modal layout with data to render content
+                        fetch('render_modal_content.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ modal: 'viewReservation', data: data })
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            modalBody.innerHTML = html;
+                        })
+                        .catch(() => {
+                            modalBody.innerHTML = '<p>Error rendering modal content.</p>';
+                        });
+                    }
+                })
+                .catch(() => {
+                    modalBody.innerHTML = '<p>Error loading reservation details.</p>';
+                });
+        });
+    });
+
+    // Edit reservation modal logic
+    var editButtons = document.querySelectorAll('.edit-reservation-btn');
+    var editModalElement = document.getElementById('editReservationModal');
+    var editModalBody = editModalElement.querySelector('.modal-body');
+
+    editButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var reservationId = this.getAttribute('data-reservation-id');
+
+            // Clear previous content
+            editModalBody.innerHTML = '<h2 class="text-center mb-3" style="font-family: Cal Sans, sans-serif; font-weight: 700; font-size: 1.5rem;">Loading...</h2>';
+
+            // Fetch reservation details via AJAX
+            fetch('get_reservation_details.php?id=' + reservationId)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        editModalBody.innerHTML = '<p>Error loading reservation details.</p>';
+                    } else {
+                        // Use the modal layout with data to render edit form
+                        fetch('render_modal_content.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ modal: 'editReservation', data: data })
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            editModalBody.innerHTML = html;
+                        })
+                        .catch(() => {
+                            editModalBody.innerHTML = '<p>Error rendering edit modal content.</p>';
+                        });
+                    }
+                })
+                .catch(() => {
+                    editModalBody.innerHTML = '<p>Error loading reservation details.</p>';
+                });
+        });
+    });
+});
+</script>
 
 <div class="modal fade" id="roomModal" tabindex="-1" aria-labelledby="roomModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -248,31 +370,8 @@ include 'header.php';
 
 <?php
     // This prints the create->book modal with id "createModal"
-    // Assuming $modals is defined in header.php or included elsewhere
-    if (isset($modals)) {
-        echo $modals->layout('create', 'book');
-    } else {
-        // Fallback if $modals is not available
-        echo '<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="createModalLabel">Add New Room</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Form to add a new room will be here.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save Room</button>
-                        </div>
-                    </div>
-                </div>
-              </div>';
-    }
+    echo Modals::layout('bookRoom');
 ?>
-
 
 <script>
     function scrollToCenter(card) {

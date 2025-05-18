@@ -17,7 +17,7 @@ header h1 {
 }
 
 .textcenter {
-    background-image: url('/HOTEL-BOOKING-MANAGEMENT-SYSTEM/photos/bgimg.jpeg');
+    background-image: url('../images/bgimg.jpeg');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -263,13 +263,6 @@ header h1 {
     color: rgba(0, 0, 0, 0.7);
 }
 
-.left-arrow {
-    /* Position to the left of the visual */
-}
-
-.right-arrow {
-    /* Position to the right of the visual */
-}
 
 .lastpage {
     display: flex;
@@ -422,6 +415,31 @@ header h1 {
     align-items: center;
     margin-left: 500px;
     padding:50px;
+}
+
+
+
+
+
+close-button { /* Targeting the close span from Modals.php */
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.feedback-list {
+    max-height: 200px;   /* Adjust height as needed */
+    overflow-y: auto;
+    margin-bottom: 20px;
 }
 
 footer {

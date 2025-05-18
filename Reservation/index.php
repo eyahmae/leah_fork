@@ -1,4 +1,4 @@
-@ -0,0 +1,386 @@
+
 <?php 
     require_once '../Database/database.php';
     require_once '../models/Reservation.php';
@@ -384,4 +384,9 @@
         });
     </script>
 </body>
+
 </html>
+
+</html>
+
+

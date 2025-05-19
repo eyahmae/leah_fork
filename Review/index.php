@@ -644,7 +644,7 @@ if (!$reviews) {
 </style>
 </head>
 
-<body class="bg" style="background-image:url(../images/bg.png); position:fixed;">
+<body class="bg" style="background-image:url(../images/bg.png); position:fixed; margin-left: 40px;">
     <div class="flex">
         <aside id="navbar" class=" text-blue-800 w-64" style="font-size: 20px; background-color: rgba(75, 216, 226, 0.75);">
 
@@ -676,7 +676,7 @@ if (!$reviews) {
                                 <span class="icon"><i class="fa fa-file-pdf"></i></span>
                                 <span class="text">Feedback</span></a>
                         </li>
-                        <li><a href="../main/pdf.php">
+                        <li><a href="../Reservation/index.php">
                                 <span class="icon"><i class="fa fa-file-pdf"></i></span>
                                 <span class="text">Reservation</span></a>
                         </li>

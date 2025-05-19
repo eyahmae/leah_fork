@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../layout/header.php';
 require_once '../Database/database.php';
 require_once '../models/Reservation.php';
 require_once '../models/Room.php';
@@ -7,11 +8,13 @@ require_once '../models/Room.php';
 // Verify staff access
 if (!in_array($_SESSION['role'], ['Super Admin', 'Admin', 'Front Desk'])) {
     echo '<script>
-            Swal.fire({
-                title: "Error!",
-                text: "Unauthorized access",
-                icon: "error",
-                confirmButtonText: "Ok"
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Unauthorized access",
+                    icon: "error",
+                    confirmButtonText: "Ok"
+                });
             });
         </script>';
     exit;
@@ -28,11 +31,13 @@ $reservation_id = $_POST['reservation_id'] ?? $_GET['reservation_id'] ?? null;
 
 if (!$reservation_id) {
     echo '<script>
-            Swal.fire({
-                title: "Error!",
-                text: "Missing reservation ID.",
-                icon: "error",
-                confirmButtonText: "Ok"
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Missing reservation ID.",
+                    icon: "error",
+                    confirmButtonText: "Ok"
+                });
             });
         </script>';
     exit;
@@ -42,11 +47,13 @@ if (!$reservation_id) {
 $reservation = Reservation::find($reservation_id);
 if (!$reservation) {
     echo '<script>
-            Swal.fire({
-                title: "Error!",
-                text: "Reservation not found.",
-                icon: "error",
-                confirmButtonText: "Ok"
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Reservation not found.",
+                    icon: "error",
+                    confirmButtonText: "Ok"
+                });
             });
         </script>';
     exit;
@@ -54,11 +61,13 @@ if (!$reservation) {
 $room = Room::find($reservation->room_id);
 if (!$room) {
     echo '<script>
-            Swal.fire({
-                title: "Error!",
-                text: "Room not found.",
-                icon: "error",
-                confirmButtonText: "Ok"
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: "Error!",
+                    text: "Room not found.",
+                    icon: "error",
+                    confirmButtonText: "Ok"
+                });
             });
         </script>';
     exit;
@@ -77,13 +86,15 @@ if ($reservation->guests > $room->capacity) {
 
     if (!$additional_room) {
         echo '<script>
-                Swal.fire({
-                    title: "Error!",
-                    text: "No available room for overflow guests.",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-            </script>';
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: "Error!",
+                text: "No available room for overflow guests.",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+        });
+    </script>';
         exit;
     }
 
@@ -110,28 +121,33 @@ if ($reservation->guests > $room->capacity) {
         $roomObj->save();
 
         echo '<script>
-                Swal.fire({
-                    title: "Success!",
-                    text: "Additional room assigned for overflow guests.",
-                    icon: "success",
-                    confirmButtonText: "Ok"
-                }).then(function() {
-                    window.location = "show.php?id=' . $reservation_id . '";
-                });
-            </script>';
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: "Success!",
+                text: "Additional room assigned for overflow guests.",
+                icon: "success",
+                confirmButtonText: "Ok"
+            }).then(function() {
+                window.location = "show.php?id=' . $reservation_id . '";
+            });
+        });
+    </script>';
 
     } catch (Exception $e) {
         echo '<script>
-                Swal.fire({
-                    title: "Error!",
-                    text: "Failed to assign additional room: ' . $e->getMessage() . '",
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                });
-            </script>';
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: "Error!",
+                text: "Failed to assign additional room: ' . $e->getMessage() . '",
+                icon: "error",
+                confirmButtonText: "Ok"
+            });
+        });
+    </script>';
     }
 } else {
     echo '<script>
+        document.addEventListener("DOMContentLoaded", function() {
             Swal.fire({
                 title: "Info",
                 text: "No overflow. Guest count fits in the current room.",
@@ -140,6 +156,7 @@ if ($reservation->guests > $room->capacity) {
             }).then(function() {
                 window.location = "show.php?id=' . $reservation_id . '";
             });
-        </script>';
+        });
+    </script>';
 }
 ?>
